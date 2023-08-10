@@ -19,6 +19,13 @@ export class UserService {
             }
         })
     }
+    async getById(id:number){
+        return await this.prisma.user.findUnique({
+            where:{
+                id
+            }
+        })
+    }
     async create(dto:CreateUserDto){
         return await this.prisma.user.create({data:{
             email:dto.email,
