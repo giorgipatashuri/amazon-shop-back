@@ -41,8 +41,10 @@ export class AuthService {
 
         const tokens = await this.issueTokens(user.id)
 
+        const { favorites, ...userWithoutFavorites } = user;
+
         return {
-            user:this.returnUserFields(user),
+            user:this.returnUserFields(userWithoutFavorites),
             ...tokens
         }
     }
