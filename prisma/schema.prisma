@@ -11,7 +11,7 @@ datasource db {
 }
 model User{
   id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())@map("create_at")
+  createdAt DateTime @default(now())@map("created_at")
   updatedAt DateTime @updatedAt() @map("updated_at")
 
   email String @unique
@@ -20,5 +20,53 @@ model User{
   name String
   avatarPath String @default("/uploads/default_avatar.png") @map("avatar_path")
 
+  reviews Review[]
+  favorites Product[]
+
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())@map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  name String @unique
+  slug String @unique
+
+  description String
+  price Int
+  images String[]
   
+  category Category? @relation(fields: [categoryId],references: [id])
+  categoryId Int @map("category_id")
+
+  reviews Review[]
+
+  user User? @relation(fields: [userId],references: [id])
+  userId Int @map("user_id")
+}
+
+model Category{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())@map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  name String @unique
+
+  products Product[]
+}
+model Review{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())@map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  rating Int
+  text String
+
+  product Product? @relation(fields: [productId],references: [id])
+  productId Int @map("product_id")
+
+  user User? @relation(fields: [userId],references: [id])
+  userId Int @map("user_id")
+
 }
