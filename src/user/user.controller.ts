@@ -21,9 +21,4 @@ export class UserController {
     return this.userService.updateProfile(id,dto)
   }
 
-  @Auth()
-  @Patch("profile/favorites/:productId")
-  toggleFavorites(@CurrentUser("id") id:number, @Param("productId") productId:string){
-    return this.userService.toggleFavorite(id,+productId)
-  }
 }

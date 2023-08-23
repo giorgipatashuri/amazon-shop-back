@@ -40,8 +40,6 @@ export class UserService {
             },
             select:{
                 ...returnFields,
-                favorites:true
-                
             }
         })
         return user
@@ -75,25 +73,6 @@ export class UserService {
             password:await hash(dto.password),
             avatarPath:faker.image.avatar(),
         }})
-    }
-    async toggleFavorite(id:number,productId:number){
-        const user = await this.getById(id)
-        if(!user) throw new NotFoundException("User not found")
-
-        const isExists = user.favorites.some(product => product.id = productId)
-
-
-        this.prisma.user.update({
-            where:{id},
-            data:{
-                favorites:{
-                    [isExists ? "disconnect" : "connect"] : {
-                        id:productId
-                    }
-                }
-            }
-        })
-        return "Success"
     }
 
 }
