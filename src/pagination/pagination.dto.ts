@@ -5,5 +5,5 @@ export class PaginationDto {
   page?: string;
 
   @IsOptional()
-  limit: string;
+  limit?: string;
 }
