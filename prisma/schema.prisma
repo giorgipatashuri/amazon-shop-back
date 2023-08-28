@@ -9,62 +9,60 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-model User{
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())@map("created_at")
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt() @map("updated_at")
 
-  email String @unique
+  email    String @unique
   password String
 
-  name String
+  name       String
   avatarPath String @default("/uploads/default_avatar.png") @map("avatar_path")
 
   reviews Review[]
-
 }
 
 model Product {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())@map("created_at")
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt() @map("updated_at")
 
   name String @unique
   slug String @unique
 
   description String
-  price Int
-  images String[]
-  
-  category Category? @relation(fields: [categoryId],references: [id])
-  categoryId Int @map("category_id")
+  price       Int
+  images      String[]
+
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int       @map("category_id")
 
   reviews Review[]
-
 }
 
-model Category{
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())@map("created_at")
+model Category {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt() @map("updated_at")
 
   name String @unique
 
-
   products Product[]
 }
-model Review{
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())@map("created_at")
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt() @map("updated_at")
 
   rating Int
-  text String
+  text   String
 
-  product Product? @relation(fields: [productId],references: [id])
-  productId Int @map("product_id")
+  product   Product? @relation(fields: [productId], references: [id])
+  productId Int      @map("product_id")
 
-  user User? @relation(fields: [userId],references: [id])
-  userId Int @map("user_id")
-
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int   @map("user_id")
 }
